@@ -32,5 +32,8 @@
   "dependencies": {
     "js-yaml": "^3.14.0",
     "phin": "^3.5.0"
+  },
+  "engines": {
+    "node": ">=8"
   }
 }
