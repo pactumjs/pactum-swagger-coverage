@@ -1,5 +1,6 @@
 # pactum-swagger-coverage
 
+![Build](https://github.com/leelaprasadv/pactum-swagger-coverage/workflows/Build/badge.svg?branch=main)
 ![Downloads](https://img.shields.io/npm/dt/pactum-swagger-coverage)
 ![Size](https://img.shields.io/bundlephobia/minzip/pactum-swagger-coverage)
 ![Platform](https://img.shields.io/node/v/pactum)
