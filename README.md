@@ -50,13 +50,35 @@ psc.swaggerYamlPath = './tests/testObjects/swagger.yaml';
 
 ```
 
-> **Note**: Either 'swaggerJsonUrl' or 'swaggerYamlPath' needs to be provided for reporter to work
+### Report Json Output (example)
+```javascript
+{
+  "basePath": "/api/server/v1",
+  "coverage": 0.2,
+  "coveredApiCount": 1,
+  "missedApiCount": 4,
+  "totalApiCount": 5,
+  "coveredApiList": [
+    "/getallninjas"
+  ],
+  "missedApiList": [
+    "/health",
+    "/getninjabyid/{id}",
+    "/getninjabyname/{name}",
+    "/getninjabyrank/{rank}"
+  ]
+}
+```
+
+> **Note**: Either 'swaggerJsonUrl' or 'swaggerYamlPath' should be provided for reporter to work.
 
 
 ## Notes
 
 Read more about Pactum [here](https://www.npmjs.com/package/pactum).
 
+
+Inspired by [swagger-coverage-postman](https://github.com/abelmokadem/swagger-coverage-postman).
 
 ----------------------------------------------------------------------------------------------------------------
 
