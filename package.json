@@ -1,0 +1,36 @@
+{
+  "name": "pactum-swagger-coverage",
+  "version": "1.0.0",
+  "description": "Swagger api coverage report for pactum tests",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "test": "uvu tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leelaprasadv/pactum-swagger-coverage.git"
+  },
+  "keywords": [
+    "pactum",
+    "swagger coverage",
+    "reporter"
+  ],
+  "author": "LeelaPrasad <leelaprasad.vadlaa@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/leelaprasadv/pactum-swagger-coverage/issues"
+  },
+  "homepage": "https://github.com/leelaprasadv/pactum-swagger-coverage#readme",
+  "devDependencies": {
+    "pactum": "^2.0.10",
+    "uvu": "^0.3.4"
+  },
+  "dependencies": {
+    "js-yaml": "^3.14.0",
+    "phin": "^3.5.0"
+  }
+}

@@ -1,0 +1,102 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Test API server"
+basePath: "/api/server/v1"
+consumes:
+  - "application/json"
+  - "text/html"
+produces:
+  - "application/json"
+  - "text/html"
+paths:
+  /health:
+    get:
+      tags:
+        - "HealthCheck"
+      description: "Health check"
+      operationId: "getHealth"
+      parameters: []
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Health"
+    x-swagger-router-controller: "health.controller"
+
+  /getallninjas:
+    get:
+      tags: [ "Ninjas" ]
+      description: "Get All Ninjas"
+      operationId: "getAllNinjas"
+      parameters: []
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Health"
+    x-swagger-router-controller: "test.controller"    
+
+  /getninjabyid/{id}:
+    get:
+      tags: ["Ninjas"]
+      description: "Get All Ninjas"
+      operationId: "getNinjaById"
+      parameters:
+        - name: id
+          in: path
+          type: integer
+          description: Id of Ninja
+          required: true
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Health"
+    x-swagger-router-controller: "test.controller" 
+
+  /getninjabyname/{name}:
+    get:
+      tags: ["Ninjas"]
+      description: "Get Ninja details by Name"
+      operationId: "getNinjaByName"
+      parameters:
+        - name: name
+          in: path
+          type: string
+          description: Name of Ninja
+          required: true
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Health"
+    x-swagger-router-controller: "test.controller" 
+
+  /getninjabyrank/{rank}:
+    get:
+      tags: ["Ninjas"]
+      description: "Get Ninja details by Rank"
+      operationId: "getNinjaByRank"
+      parameters:
+        - name: rank
+          in: path
+          type: string
+          description: Rank of Ninja
+          required: true
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Health"
+    x-swagger-router-controller: "test.controller" 
+  
+definitions:
+  Health:
+    description: "Health Response"
+    properties:
+      message:
+        type: "string"
+    example:
+      message: "OK"
+      
