@@ -13,11 +13,45 @@ test.before(() => {
   psc.file = 'report.json'
   reporter.add(psc);
   request.setBaseUrl('http://localhost:9393');
-  handler.addMockInteractionHandler('get ninjas', () => {
+  handler.addMockInteractionHandler('get all ninjas', () => {
     return {
       withRequest: {
         method: 'GET',
         path: '/api/server/v1/getallninjas'
+      },
+      willRespondWith: {
+        status: 200
+      }
+    }
+  });
+  handler.addMockInteractionHandler('get ninjas by rank', (ctx) => {
+    return {
+      withRequest: {
+        method: 'GET',
+        path: `/api/server/v1/getninjas/${ctx.data}`
+      },
+      willRespondWith: {
+        status: 200
+      }
+    }
+  });
+  handler.addMockInteractionHandler('get ninja by rank and name', (ctx) => {
+    return {
+      withRequest: {
+        method: 'GET',
+        path: `/api/server/v1/getninja/${ctx.data.rank}/${ctx.data.name}`
+      },
+      willRespondWith: {
+        status: 200
+      }
+    }
+  });
+
+  handler.addMockInteractionHandler('get health', () => {
+    return {
+      withRequest: {
+        method: 'GET',
+        path: `/api/server/v1/health`
       },
       willRespondWith: {
         status: 200
@@ -33,8 +67,29 @@ test.after(() => {
 
 test('spec passed', async () => {
   await pactum.spec()
-    .useMockInteraction('get ninjas')
+    .useMockInteraction('get all ninjas')
     .get('/api/server/v1/getallninjas')
+    .expectStatus(200);
+});
+
+test('spec passed - additional path params', async () => {
+  await pactum.spec()
+    .useMockInteraction('get ninjas by rank', "jounin")
+    .get('/api/server/v1/getninjas/jounin')
+    .expectStatus(200);
+});
+
+test('spec passed - no path params', async () => {
+  await pactum.spec()
+    .useMockInteraction('get health')
+    .get('/api/server/v1/health')
+    .expectStatus(200);
+});
+
+test('spec passed - different api path with path params', async () => {
+  await pactum.spec()
+    .useMockInteraction('get ninja by rank and name', {rank: "jounin", name: "kakashi"})
+    .get('/api/server/v1/getninja/jounin/kakashi')
     .expectStatus(200);
 });
 
@@ -42,16 +97,6 @@ test('spec failed', async () => {
   try {
     await pactum.spec()
       .get('/api/server/v1/getallninjas')
-      .expectStatus(200);
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-test('spec error', async () => {
-  try {
-    await pactum.spec()
-      .get('http://localhost:9001/api/user')
       .expectStatus(200);
   } catch (error) {
     console.log(error);
@@ -73,12 +118,12 @@ test('validate json reporter', async () => {
   assert.equal(report.hasOwnProperty("totalApiCount"), true)
   assert.equal(report.hasOwnProperty("coveredApiList"), true)
   assert.equal(report.hasOwnProperty("missedApiList"), true)
-  assert.equal(report.coverage, 0.2);
-  assert.equal(report.coveredApiCount, 1);
-  assert.equal(report.missedApiCount, 4);
-  assert.equal(report.totalApiCount, 5);
-  assert.equal(report.coveredApiList.length, 1);
-  assert.equal(report.missedApiList.length, 4);
+  assert.equal(report.coverage, 0.6666666666666666);
+  assert.equal(report.coveredApiCount, 4);
+  assert.equal(report.missedApiCount, 2);
+  assert.equal(report.totalApiCount, 6);
+  assert.equal(report.coveredApiList.length, 4);
+  assert.equal(report.missedApiList.length, 2);
 });
 
 test.run();

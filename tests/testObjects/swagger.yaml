@@ -36,44 +36,8 @@ paths:
           schema:
             $ref: "#/definitions/Health"
     x-swagger-router-controller: "test.controller"    
-
-  /getninjabyid/{id}:
-    get:
-      tags: ["Ninjas"]
-      description: "Get All Ninjas"
-      operationId: "getNinjaById"
-      parameters:
-        - name: id
-          in: path
-          type: integer
-          description: Id of Ninja
-          required: true
-      responses:
-        200:
-          description: "Success"
-          schema:
-            $ref: "#/definitions/Health"
-    x-swagger-router-controller: "test.controller" 
-
-  /getninjabyname/{name}:
-    get:
-      tags: ["Ninjas"]
-      description: "Get Ninja details by Name"
-      operationId: "getNinjaByName"
-      parameters:
-        - name: name
-          in: path
-          type: string
-          description: Name of Ninja
-          required: true
-      responses:
-        200:
-          description: "Success"
-          schema:
-            $ref: "#/definitions/Health"
-    x-swagger-router-controller: "test.controller" 
-
-  /getninjabyrank/{rank}:
+  
+  /getninjas/{rank}:
     get:
       tags: ["Ninjas"]
       description: "Get Ninja details by Rank"
@@ -90,7 +54,71 @@ paths:
           schema:
             $ref: "#/definitions/Health"
     x-swagger-router-controller: "test.controller" 
+
+  /getninjas/{clan}/{rank}:
+    get:
+      tags: ["Ninjas"]
+      description: "Get Ninja details by Clan and Rank"
+      operationId: "getNinjaByRank"
+      parameters:
+        - name: clan
+          in: path
+          type: string
+          description: Clan of Ninja
+          required: true
+        - name: rank
+          in: path
+          type: string
+          description: Rank of Ninja
+          required: true
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Health"
+    x-swagger-router-controller: "test.controller" 
   
+  /getninja/{name}:
+    get:
+      tags: ["Ninjas"]
+      description: "Get Ninja details by Name"
+      operationId: "getNinjaByRank"
+      parameters:
+        - name: name
+          in: path
+          type: string
+          description: Name of Ninja
+          required: true
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Health"
+    x-swagger-router-controller: "test.controller" 
+  
+  /getninja/{rank}/{name}:
+    get:
+      tags: ["Ninjas"]
+      description: "Get Ninja details by Rank and name"
+      operationId: "getNinjaByRank"
+      parameters:
+        - name: rank
+          in: path
+          type: string
+          description: Rank of Ninja
+          required: true
+        - name: name
+          in: path
+          type: string
+          description: Name of Ninja
+          required: true
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Health"
+    x-swagger-router-controller: "test.controller" 
+
 definitions:
   Health:
     description: "Health Response"

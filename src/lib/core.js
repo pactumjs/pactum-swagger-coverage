@@ -4,7 +4,10 @@ const yaml = require('js-yaml');
 const fs = require('fs');
 const { PSCConfigurationError, PSCClientError, PSCSwaggerLoadError } = require('../helpers/errors');
 
-
+/**
+ * Function to Load the Swagger Yaml file
+ * @returns {Object} Swagger file object
+ */
 async function loadSwaggerYaml() {
   // Get swagger yaml document, or throw exception on error
   const swaggerYAMLPath = config.swaggerYamlPath.trim();
@@ -20,6 +23,10 @@ async function loadSwaggerYaml() {
   }
 }
 
+/**
+ * Function to load the swagger Json file
+ * @returns {Object} Swagger file object
+ */
 async function loadSwaggerJson() {
   let swaggerInfo = {};
   let swaggerJsonUrl = config.swaggerJsonUrl.trim();
@@ -35,12 +42,22 @@ async function loadSwaggerJson() {
   }
 }
 
+/**
+ * Fuction to all get api path's from swagger file
+ * @param {Object} swaggerInfo 
+ * @returns {Array} Array of API paths
+ */
 function getApiPaths(swaggerInfo) {
   const apiPaths = Object.keys(swaggerInfo.paths);
-  apiPaths.forEach((apiPath) => { apiPath = `${swaggerInfo.basePath}${apiPath}` })
-  return apiPaths
+  apiPaths.forEach((apiPath, index) => apiPaths[index] = `${swaggerInfo.basePath}${apiPath}`);
+  return apiPaths;
 }
 
+/**
+ * Function to get swagger coverage stats
+ * @param {Array} testsCoveredApis 
+ * @returns {object} Swagger coverage stats
+ */
 async function getSwaggerCoverage(testsCoveredApis) {
   const swaggerInfo = config.swaggerYamlPath ? await loadSwaggerYaml() : await loadSwaggerJson();
   const apiPaths = getApiPaths(swaggerInfo);
@@ -60,13 +77,18 @@ async function getSwaggerCoverage(testsCoveredApis) {
   }
 }
 
+/**
+ * Function to RegEx match api paths
+ * @param {String} apiPath 
+ * @param {String} rPath 
+ * @returns {Boolean} Match result
+ */
 function regExMatchOfPath(apiPath, rPath) {
-  if (apiPath.includes("{")) {
-    const idx = apiPath.indexOf("{");
-    apiPath = apiPath.substring(0, idx);
-  }
-  const regex = RegExp(apiPath);
-  return regex.test(rPath);
+  const regex = RegExp(apiPath.replace(/{[^\/]+}/g,'.*'));
+  const extractedApiPath = rPath.match(regex);
+  const extractedPathSepCount = (extractedApiPath ? extractedApiPath[0].match(/\//g) : []).length;
+  const apiPathSepCount = (apiPath.match(/\//g) || []).length;
+  return regex.test(rPath) && (extractedPathSepCount === apiPathSepCount);
 }
 
 module.exports = {
