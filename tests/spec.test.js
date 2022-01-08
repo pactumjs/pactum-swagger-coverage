@@ -35,28 +35,18 @@ test.before(() => {
       }
     }
   });
-  handler.addMockInteractionHandler('get ninjas by rank and name', (ctx) => {
+  handler.addMockInteractionHandler('get ninja by rank and name', (ctx) => {
     return {
       withRequest: {
         method: 'GET',
-        path: `/api/server/v1/getninjas/${ctx.data.rank}/${ctx.data.name}`
+        path: `/api/server/v1/getninja/${ctx.data.rank}/${ctx.data.name}`
       },
       willRespondWith: {
         status: 200
       }
     }
   });
-  handler.addMockInteractionHandler('get ninja by name', (ctx) => {
-    return {
-      withRequest: {
-        method: 'GET',
-        path: `/api/server/v1/getninjabyname/${ctx.data}`
-      },
-      willRespondWith: {
-        status: 200
-      }
-    }
-  });
+
   handler.addMockInteractionHandler('get health', () => {
     return {
       withRequest: {
@@ -89,15 +79,6 @@ test('spec passed - additional path params', async () => {
     .expectStatus(200);
 });
 
-
-test('spec passed - additional path params variation', async () => {
-  await pactum.spec()
-    .useMockInteraction('get ninja by name', "kakashi")
-    .get('/api/server/v1/getninjabyname/kakashi')
-    .expectStatus(200);
-});
-
-
 test('spec passed - no path params', async () => {
   await pactum.spec()
     .useMockInteraction('get health')
@@ -107,8 +88,8 @@ test('spec passed - no path params', async () => {
 
 test('spec passed - different api path with path params', async () => {
   await pactum.spec()
-    .useMockInteraction('get ninjas by rank and name', {rank: "jounin", name: "kakashi"})
-    .get('/api/server/v1/getninjas/jounin/kakashi')
+    .useMockInteraction('get ninja by rank and name', {rank: "jounin", name: "kakashi"})
+    .get('/api/server/v1/getninja/jounin/kakashi')
     .expectStatus(200);
 });
 
@@ -137,11 +118,11 @@ test('validate json reporter', async () => {
   assert.equal(report.hasOwnProperty("totalApiCount"), true)
   assert.equal(report.hasOwnProperty("coveredApiList"), true)
   assert.equal(report.hasOwnProperty("missedApiList"), true)
-  assert.equal(report.coverage, 0.7142857142857142);
-  assert.equal(report.coveredApiCount, 5);
+  assert.equal(report.coverage, 0.6666666666666666);
+  assert.equal(report.coveredApiCount, 4);
   assert.equal(report.missedApiCount, 2);
-  assert.equal(report.totalApiCount, 7);
-  assert.equal(report.coveredApiList.length, 5);
+  assert.equal(report.totalApiCount, 6);
+  assert.equal(report.coveredApiList.length, 4);
   assert.equal(report.missedApiList.length, 2);
 });
 
