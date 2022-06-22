@@ -3,3 +3,5 @@ reports/
 .vscode
 *.tar.gz
 *.tgz
+/.idea/
+/package-lock.json

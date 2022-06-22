@@ -4,28 +4,28 @@ on:
   pull_request:
     paths-ignore:
       - 'README.md'
-    branches: 
+    branches:
       - main
   push:
     paths-ignore:
       - 'README.md'
-    branches: 
+    branches:
       - main
 
 jobs:
   build:
-    
+
     runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest, macos-latest]
-        node-version: [8.x, 10.x, 12.x, 14.x]
+        node-version: [8.x, 10.x, 12.x, 14.x, 16.x, 18.x]
 
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install

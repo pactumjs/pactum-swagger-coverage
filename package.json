@@ -26,12 +26,12 @@
   },
   "homepage": "https://github.com/leelaprasadv/pactum-swagger-coverage#readme",
   "devDependencies": {
-    "pactum": "^2.0.10",
-    "uvu": "^0.3.4"
+    "pactum": "^3.0.1",
+    "uvu": "^0.5.4"
   },
   "dependencies": {
-    "js-yaml": "^3.14.0",
-    "phin": "^3.5.0"
+    "js-yaml": "^4.1.0",
+    "phin": "^3.6.1"
   },
   "engines": {
     "node": ">=8"
