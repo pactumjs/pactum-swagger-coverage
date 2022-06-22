@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/leelaprasadv/pactum-swagger-coverage#readme",
   "devDependencies": {
-    "pactum": "^3.0.1",
+    "pactum": "^3.1.10",
     "uvu": "^0.5.4"
   },
   "dependencies": {
