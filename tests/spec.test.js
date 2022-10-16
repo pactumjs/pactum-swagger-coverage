@@ -13,47 +13,47 @@ test.before(() => {
   psc.file = 'report.json'
   reporter.add(psc);
   request.setBaseUrl('http://localhost:9393');
-  handler.addMockInteractionHandler('get all ninjas', () => {
+  handler.addInteractionHandler('get all ninjas', () => {
     return {
-      withRequest: {
+      request: {
         method: 'GET',
         path: '/api/server/v1/getallninjas'
       },
-      willRespondWith: {
+      response: {
         status: 200
       }
     }
   });
-  handler.addMockInteractionHandler('get ninjas by rank', (ctx) => {
+  handler.addInteractionHandler('get ninjas by rank', (ctx) => {
     return {
-      withRequest: {
+      request: {
         method: 'GET',
         path: `/api/server/v1/getninjas/${ctx.data}`
       },
-      willRespondWith: {
+      response: {
         status: 200
       }
     }
   });
-  handler.addMockInteractionHandler('get ninja by rank and name', (ctx) => {
+  handler.addInteractionHandler('get ninja by rank and name', (ctx) => {
     return {
-      withRequest: {
+      request: {
         method: 'GET',
         path: `/api/server/v1/getninja/${ctx.data.rank}/${ctx.data.name}`
       },
-      willRespondWith: {
+      response: {
         status: 200
       }
     }
   });
 
-  handler.addMockInteractionHandler('get health', () => {
+  handler.addInteractionHandler('get health', () => {
     return {
-      withRequest: {
+      request: {
         method: 'GET',
         path: `/api/server/v1/health`
       },
-      willRespondWith: {
+      response: {
         status: 200
       }
     }
@@ -67,28 +67,28 @@ test.after(() => {
 
 test('spec passed', async () => {
   await pactum.spec()
-    .useMockInteraction('get all ninjas')
+    .useInteraction('get all ninjas')
     .get('/api/server/v1/getallninjas')
     .expectStatus(200);
 });
 
 test('spec passed - additional path params', async () => {
   await pactum.spec()
-    .useMockInteraction('get ninjas by rank', "jounin")
+    .useInteraction('get ninjas by rank', "jounin")
     .get('/api/server/v1/getninjas/jounin')
     .expectStatus(200);
 });
 
 test('spec passed - no path params', async () => {
   await pactum.spec()
-    .useMockInteraction('get health')
+    .useInteraction('get health')
     .get('/api/server/v1/health')
     .expectStatus(200);
 });
 
 test('spec passed - different api path with path params', async () => {
   await pactum.spec()
-    .useMockInteraction('get ninja by rank and name', {rank: "jounin", name: "kakashi"})
+    .useInteraction('get ninja by rank and name', {rank: "jounin", name: "kakashi"})
     .get('/api/server/v1/getninja/jounin/kakashi')
     .expectStatus(200);
 });

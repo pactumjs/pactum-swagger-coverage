@@ -17,7 +17,7 @@ async function loadSwaggerYaml() {
 
   try {
     const swaggerYamlDoc = fs.readFileSync(swaggerYAMLPath, 'utf8');
-    return yaml.safeLoad(swaggerYamlDoc);
+    return yaml.load(swaggerYamlDoc);
   } catch (err) {
     throw new PSCSwaggerLoadError(err)
   }
@@ -44,7 +44,7 @@ async function loadSwaggerJson() {
 
 /**
  * Fuction to all get api path's from swagger file
- * @param {Object} swaggerInfo 
+ * @param {Object} swaggerInfo
  * @returns {Array} Array of API paths
  */
 function getApiPaths(swaggerInfo) {
@@ -55,7 +55,7 @@ function getApiPaths(swaggerInfo) {
 
 /**
  * Function to get swagger coverage stats
- * @param {Array} testsCoveredApis 
+ * @param {Array} testsCoveredApis
  * @returns {object} Swagger coverage stats
  */
 async function getSwaggerCoverage(testsCoveredApis) {
@@ -79,8 +79,8 @@ async function getSwaggerCoverage(testsCoveredApis) {
 
 /**
  * Function to RegEx match api paths
- * @param {String} apiPath 
- * @param {String} rPath 
+ * @param {String} apiPath
+ * @param {String} rPath
  * @returns {Boolean} Match result
  */
 function regExMatchOfPath(apiPath, rPath) {
