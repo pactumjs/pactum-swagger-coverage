@@ -8,10 +8,11 @@ const testsCoveredApis = [];
 const psc = {
 
   name: config.name,
-  reportPath: config.path,
-  file: config.file,
+  reportPath: config.reportPath,
+  reportFile: config.reportFile,
   swaggerJsonUrl: config.swaggerJsonUrl,
   swaggerYamlPath: config.swaggerYamlPath,
+  basePath: config.basePath,
 
   afterSpec(spec) {
     const _specApiPath = {}
@@ -27,13 +28,14 @@ const psc = {
   async end() {
     config.swaggerJsonUrl = this.swaggerJsonUrl;
     config.swaggerYamlPath = this.swaggerYamlPath;
+    config.basePath = this.basePath;
     const coverage = await core.getSwaggerCoverage(testsCoveredApis)
 
     if (!fs.existsSync(this.reportPath)) {
       fs.mkdirSync(this.reportPath, { recursive: true });
     }
 
-    fs.writeFileSync(path.resolve(this.reportPath, this.file), JSON.stringify(coverage, null, 2));
+    fs.writeFileSync(path.resolve(this.reportPath, this.reportFile), JSON.stringify(coverage, null, 2));
 
   },
 

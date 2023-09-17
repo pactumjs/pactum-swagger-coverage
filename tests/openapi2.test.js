@@ -10,7 +10,8 @@ const psc = require('../src/index');
 
 test.before(() => {
   psc.swaggerYamlPath = './tests/testObjects/swagger.yaml';
-  psc.file = 'report.json'
+  psc.basePath = '/api/server/v1'
+  psc.reportFile = 'report.json'
   reporter.add(psc);
   request.setBaseUrl('http://localhost:9393');
   handler.addInteractionHandler('get all ninjas', () => {
@@ -118,7 +119,7 @@ test('validate json reporter', async () => {
   assert.equal(report.hasOwnProperty("totalApiCount"), true)
   assert.equal(report.hasOwnProperty("coveredApiList"), true)
   assert.equal(report.hasOwnProperty("missedApiList"), true)
-  assert.equal(report.coverage, 0.6666666666666666);
+  assert.equal(report.coverage, 0.67);
   assert.equal(report.coveredApiCount, 4);
   assert.equal(report.missedApiCount, 2);
   assert.equal(report.totalApiCount, 6);

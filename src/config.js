@@ -1,9 +1,11 @@
 const config = {
   name: 'SwaggerCovReporter',
-  path: './reports',
-  file: 'swagger-cov-report.json',
+  reportPath: './reports',
+  reportFile: 'swagger-cov-report.json',
   swaggerJsonUrl: "",
-  swaggerYamlPath: ""
+  swaggerYamlPath: "",
+  basePath: "",
+  oasTag: "swagger"
 }
 
 module.exports = config;

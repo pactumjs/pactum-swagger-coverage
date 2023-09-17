@@ -37,10 +37,10 @@ after(() => {
 const psc = require('pactum-swagger-coverage');
 
 // name of the report file - defaults to "swagger-cov-report.json"
-psc.file = 'report-name.json';
+psc.reportFile = 'report-name.json';
 
 // folder path for the report file - defaults to "./reports"
-psc.path = './reports-path';
+psc.reportPath = './reports-path';
 
 // Swagger json url of the server - defaults to ""
 psc.swaggerJsonUrl = "http://localhost:3010/api/server/v1/json";

@@ -59,7 +59,7 @@ paths:
     get:
       tags: ["Ninjas"]
       description: "Get Ninja details by Clan and Rank"
-      operationId: "getNinjaByRank"
+      operationId: "getNinjaByClanRank"
       parameters:
         - name: clan
           in: path
@@ -82,7 +82,7 @@ paths:
     get:
       tags: ["Ninjas"]
       description: "Get Ninja details by Name"
-      operationId: "getNinjaByRank"
+      operationId: "getNinjaByName"
       parameters:
         - name: name
           in: path
@@ -100,7 +100,7 @@ paths:
     get:
       tags: ["Ninjas"]
       description: "Get Ninja details by Rank and name"
-      operationId: "getNinjaByRank"
+      operationId: "getNinjaByRankName"
       parameters:
         - name: rank
           in: path
