@@ -5,3 +5,4 @@ reports/
 *.tgz
 /.idea/
 /package-lock.json
+coverage

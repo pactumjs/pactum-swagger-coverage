@@ -1,0 +1,179 @@
+openapi: 3.0.1
+info:
+  title: Test API server
+  version: 1.0.0
+servers:
+- url: /api/server/v2
+paths:
+  /health:
+    get:
+      tags:
+      - HealthCheck
+      description: Health check
+      operationId: getHealth
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Health'
+    x-swagger-router-controller: health.controller
+  /getallninjas:
+    get:
+      tags:
+      - Ninjas
+      description: Get All Ninjas
+      operationId: getAllNinjas
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Health'
+    x-swagger-router-controller: test.controller
+  /getninjas/{rank}:
+    get:
+      tags:
+      - Ninjas
+      description: Get Ninja details by Rank
+      operationId: getNinjaByRank
+      parameters:
+      - name: rank
+        in: path
+        description: Rank of Ninja
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Health'
+    x-swagger-router-controller: test.controller
+  /getninjas/{clan}/{rank}:
+    get:
+      tags:
+      - Ninjas
+      description: Get Ninja details by Clan and Rank
+      operationId: getNinjaByClanRank
+      parameters:
+      - name: clan
+        in: path
+        description: Clan of Ninja
+        required: true
+        schema:
+          type: string
+      - name: rank
+        in: path
+        description: Rank of Ninja
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Health'
+    x-swagger-router-controller: test.controller
+  /getninja/{name}:
+    get:
+      tags:
+      - Ninjas
+      description: Get Ninja details by Name
+      operationId: getNinjaByName
+      parameters:
+      - name: name
+        in: path
+        description: Name of Ninja
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Health'
+    x-swagger-router-controller: test.controller
+  /ninja:
+    post:
+      tags:
+        - Ninjas
+      description: Add a Ninja
+      operationId: addNinja
+      requestBody:
+        description: Add New Ninja
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Health'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'          
+  /getninja/{rank}/{name}:
+    get:
+      tags:
+      - Ninjas
+      description: Get Ninja details by Rank and name
+      operationId: getNinjaByRankName
+      parameters:
+      - name: rank
+        in: path
+        description: Rank of Ninja
+        required: true
+        schema:
+          type: string
+      - name: name
+        in: path
+        description: Name of Ninja
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Health'
+    x-swagger-router-controller: test.controller
+components:
+  schemas:
+    Health:
+      type: object
+      properties:
+        message:
+          type: string
+      description: Health Response
+      example:
+        message: OK

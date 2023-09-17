@@ -9,15 +9,16 @@ const handler = pactum.handler;
 const psc = require('../src/index');
 
 test.before(() => {
-  psc.swaggerYamlPath = './tests/testObjects/swagger.yaml';
-  psc.file = 'report.json'
+  psc.swaggerYamlPath = './tests/testObjects/openapi3.yaml';
+  psc.basePath = '/api/server/v2'
+  psc.reportFile = 'report-openapi3.json'
   reporter.add(psc);
   request.setBaseUrl('http://localhost:9393');
   handler.addInteractionHandler('get all ninjas', () => {
     return {
       request: {
         method: 'GET',
-        path: '/api/server/v1/getallninjas'
+        path: '/api/server/v2/getallninjas'
       },
       response: {
         status: 200
@@ -28,7 +29,7 @@ test.before(() => {
     return {
       request: {
         method: 'GET',
-        path: `/api/server/v1/getninjas/${ctx.data}`
+        path: `/api/server/v2/getninjas/${ctx.data}`
       },
       response: {
         status: 200
@@ -39,7 +40,7 @@ test.before(() => {
     return {
       request: {
         method: 'GET',
-        path: `/api/server/v1/getninja/${ctx.data.rank}/${ctx.data.name}`
+        path: `/api/server/v2/getninja/${ctx.data.rank}/${ctx.data.name}`
       },
       response: {
         status: 200
@@ -51,7 +52,7 @@ test.before(() => {
     return {
       request: {
         method: 'GET',
-        path: `/api/server/v1/health`
+        path: `/api/server/v2/health`
       },
       response: {
         status: 200
@@ -68,35 +69,35 @@ test.after(() => {
 test('spec passed', async () => {
   await pactum.spec()
     .useInteraction('get all ninjas')
-    .get('/api/server/v1/getallninjas')
+    .get('/api/server/v2/getallninjas')
     .expectStatus(200);
 });
 
 test('spec passed - additional path params', async () => {
   await pactum.spec()
     .useInteraction('get ninjas by rank', "jounin")
-    .get('/api/server/v1/getninjas/jounin')
+    .get('/api/server/v2/getninjas/jounin')
     .expectStatus(200);
 });
 
 test('spec passed - no path params', async () => {
   await pactum.spec()
     .useInteraction('get health')
-    .get('/api/server/v1/health')
+    .get('/api/server/v2/health')
     .expectStatus(200);
 });
 
 test('spec passed - different api path with path params', async () => {
   await pactum.spec()
     .useInteraction('get ninja by rank and name', {rank: "jounin", name: "kakashi"})
-    .get('/api/server/v1/getninja/jounin/kakashi')
+    .get('/api/server/v2/getninja/jounin/kakashi')
     .expectStatus(200);
 });
 
 test('spec failed', async () => {
   try {
     await pactum.spec()
-      .get('/api/server/v1/getallninjas')
+      .get('/api/server/v2/getallninjas')
       .expectStatus(200);
   } catch (error) {
     console.log(error);
@@ -108,7 +109,7 @@ test('run reporter', async () => {
 });
 
 test('validate json reporter', async () => {
-  const report = require('../reports/report.json');
+  const report = require('../reports/report-openapi3.json');
   console.log(JSON.stringify(report, null, 2));
   assert.equal(Object.keys(report).length, 7);
   assert.equal(report.hasOwnProperty("basePath"), true)
@@ -118,12 +119,12 @@ test('validate json reporter', async () => {
   assert.equal(report.hasOwnProperty("totalApiCount"), true)
   assert.equal(report.hasOwnProperty("coveredApiList"), true)
   assert.equal(report.hasOwnProperty("missedApiList"), true)
-  assert.equal(report.coverage, 0.6666666666666666);
+  assert.equal(report.coverage, 0.57);
   assert.equal(report.coveredApiCount, 4);
-  assert.equal(report.missedApiCount, 2);
-  assert.equal(report.totalApiCount, 6);
+  assert.equal(report.missedApiCount, 3);
+  assert.equal(report.totalApiCount, 7);
   assert.equal(report.coveredApiList.length, 4);
-  assert.equal(report.missedApiList.length, 2);
+  assert.equal(report.missedApiList.length, 3);
 });
 
 test.run();

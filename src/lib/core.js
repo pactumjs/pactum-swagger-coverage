@@ -28,15 +28,15 @@ async function loadSwaggerYaml() {
  * @returns {Object} Swagger file object
  */
 async function loadSwaggerJson() {
-  let swaggerInfo = {};
+  let apiDefinition = {};
   let swaggerJsonUrl = config.swaggerJsonUrl.trim();
   if (!swaggerJsonUrl || swaggerJsonUrl === null) {
     throw new PSCConfigurationError("Swagger definition cannot be empty! Provide 'swaggerYamlPath' or 'swaggerJsonUrl'.");
   }
 
   try {
-    swaggerInfo = await http.get(swaggerJsonUrl);
-    return swaggerInfo;
+    apiDefinition = await http.get(swaggerJsonUrl);
+    return apiDefinition;
   } catch (error) {
     throw new PSCClientError(error);
   }
@@ -44,12 +44,12 @@ async function loadSwaggerJson() {
 
 /**
  * Fuction to all get api path's from swagger file
- * @param {Object} swaggerInfo
+ * @param {Object} apiDefinition
  * @returns {Array} Array of API paths
  */
-function getApiPaths(swaggerInfo) {
-  const apiPaths = Object.keys(swaggerInfo.paths);
-  apiPaths.forEach((apiPath, index) => apiPaths[index] = `${swaggerInfo.basePath}${apiPath}`);
+function getApiPaths(apiDefinition) {
+  const apiPaths = Object.keys(apiDefinition.paths);
+  apiPaths.forEach((apiPath, index) => apiPaths[index] = `${config.basePath}${apiPath}`);
   return apiPaths;
 }
 
@@ -59,22 +59,38 @@ function getApiPaths(swaggerInfo) {
  * @returns {object} Swagger coverage stats
  */
 async function getSwaggerCoverage(testsCoveredApis) {
-  const swaggerInfo = config.swaggerYamlPath ? await loadSwaggerYaml() : await loadSwaggerJson();
-  const apiPaths = getApiPaths(swaggerInfo);
+  const apiDefinition = config.swaggerYamlPath ? await loadSwaggerYaml() : await loadSwaggerJson();
+  if (apiDefinition.hasOwnProperty("openapi")) {
+    config.oasTag = "openapi";
+  }
+  config.basePath = getBasePath(apiDefinition);
+  const apiPaths = getApiPaths(apiDefinition);
   const apiCovList = apiPaths.map(apiPath =>
     !!testsCoveredApis.find(({ path }) => {
       return !!regExMatchOfPath(apiPath, path);
     }));
 
   return {
-    basePath: swaggerInfo.basePath,
-    coverage: apiCovList.reduce((total, result, index, results) => result ? total + 1 / results.length : total, 0),
+    basePath: config.basePath,
+    coverage: Math.round(apiCovList.reduce((total, result, index, results) => result ? total + 1 / results.length : total, 0)*100)/100,
     coveredApiCount: apiPaths.filter((_, idx) => apiCovList[idx]).length,
     missedApiCount: apiPaths.filter((_, idx) => !apiCovList[idx]).length,
     totalApiCount: apiCovList.length,
     coveredApiList: apiPaths.filter((_, idx) => apiCovList[idx]),
     missedApiList: apiPaths.filter((_, idx) => !apiCovList[idx])
   }
+}
+
+/**
+ * Function to return basePath
+ * @param {object} apiDefinition 
+ * @returns 
+ */
+function getBasePath(apiDefinition){
+  if (apiDefinition.hasOwnProperty("openapi") && apiDefinition.servers && apiDefinition.servers[0].url) {
+    apiDefinition.basePath = apiDefinition.servers[0].url;
+  }
+  return config.basePath || apiDefinition.basePath;
 }
 
 /**

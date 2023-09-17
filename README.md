@@ -5,7 +5,7 @@
 ![Size](https://img.shields.io/bundlephobia/minzip/pactum-swagger-coverage)
 ![Platform](https://img.shields.io/node/v/pactum)
 
-JSON swagger coverage reporter for [Pactum](https://www.npmjs.com/package/pactum) tests. It's capable of reading the swagger definitions from either `swagger.yaml` or `swagger.json` (served on a http server endpoint).
+JSON swagger/openapi3 coverage reporter for [Pactum](https://www.npmjs.com/package/pactum) tests. It's capable of reading the swagger/oas3 definitions from either `swagger.yaml` or `swagger.json` or `openapi3.yaml` (served on a http server endpoint).
 
 ## Installation
 
@@ -37,10 +37,16 @@ after(() => {
 const psc = require('pactum-swagger-coverage');
 
 // name of the report file - defaults to "swagger-cov-report.json"
-psc.file = 'report-name.json';
+psc.reportFile = 'report-name.json';
 
 // folder path for the report file - defaults to "./reports"
-psc.path = './reports-path';
+psc.reportPath = './reports-path';
+
+/** 
+* base path - defaults to `basePath` for swagger 2.0/openapi2 and first server url 
+* or empty if either of them doesn't exist or not set explicitly
+*/ 
+psc.basePath = '/api/server/v1'; 
 
 // Swagger json url of the server - defaults to ""
 psc.swaggerJsonUrl = "http://localhost:3010/api/server/v1/json";
