@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/leelaprasadv/pactum-swagger-coverage.git"
+    "url": "git+https://github.com/pactumjs/pactum-swagger-coverage.git"
   },
   "keywords": [
     "pactum",
@@ -22,18 +22,18 @@
   "author": "LeelaPrasad <leelaprasad.vadlaa@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/leelaprasadv/pactum-swagger-coverage/issues"
+    "url": "https://github.com/pactumjs/pactum-swagger-coverage/issues"
   },
-  "homepage": "https://github.com/leelaprasadv/pactum-swagger-coverage#readme",
+  "homepage": "https://github.com/pactumjs/pactum-swagger-coverage#readme",
   "devDependencies": {
-    "pactum": "^3.1.12",
-    "uvu": "^0.5.4"
+    "pactum": "^3.5.1",
+    "uvu": "^0.5.6"
   },
   "dependencies": {
     "js-yaml": "^4.1.0",
-    "phin": "^3.6.1"
+    "phin": "^3.7.0"
   },
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   }
 }
