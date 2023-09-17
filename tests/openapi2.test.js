@@ -9,8 +9,8 @@ const handler = pactum.handler;
 const psc = require('../src/index');
 
 test.before(() => {
-  psc.swaggerYamlPath = './tests/testObjects/swagger.yaml';
-  psc.basePath = '/api/server/v1'
+  psc.swaggerYamlPath = './tests/testObjects/openapi2.yaml';
+  psc.basePath = '/api/server/v3'
   psc.reportFile = 'report.json'
   reporter.add(psc);
   request.setBaseUrl('http://localhost:9393');

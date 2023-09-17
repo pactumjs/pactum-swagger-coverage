@@ -29,7 +29,7 @@ const psc = {
     config.swaggerJsonUrl = this.swaggerJsonUrl;
     config.swaggerYamlPath = this.swaggerYamlPath;
     config.basePath = this.basePath;
-    const coverage = await core.getSwaggerCoverage(testsCoveredApis)
+    const coverage = await core.getSwaggerCoverage(testsCoveredApis);
 
     if (!fs.existsSync(this.reportPath)) {
       fs.mkdirSync(this.reportPath, { recursive: true });
