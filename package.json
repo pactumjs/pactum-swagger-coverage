@@ -1,6 +1,6 @@
 {
   "name": "pactum-swagger-coverage",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Swagger api coverage report for pactum tests",
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
