@@ -1,0 +1,51 @@
+openapi: 3.0.0
+info:
+  title: Test API server
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /health:
+    get:
+      tags:
+        - HealthCheck
+      description: Health check
+      operationId: getHealth
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Health'
+    x-swagger-router-controller: health.controller
+  /getallninjas:
+    get:
+      tags:
+        - Ninjas
+      description: Get All Ninjas
+      operationId: getAllNinjas
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Health'
+    x-swagger-router-controller: test.controller
+components:
+  schemas:
+    Health:
+      type: object
+      properties:
+        message:
+          type: string
+      description: Health Response
+      example:
+        message: OK

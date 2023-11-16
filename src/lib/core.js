@@ -90,7 +90,7 @@ function getBasePath(apiDefinition){
   if (apiDefinition.hasOwnProperty("openapi") && apiDefinition.servers && apiDefinition.servers[0].url) {
     apiDefinition.basePath = apiDefinition.servers[0].url;
   }
-  return config.basePath || apiDefinition.basePath;
+  return config.basePath !== undefined ? config.basePath : apiDefinition.basePath;
 }
 
 /**
